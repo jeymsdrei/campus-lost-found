@@ -1,6 +1,15 @@
 <x-app-layout>
     <div class="container py-4">
-        <h2 class="mb-4"><i class="bi bi-file-text"></i> Manage Claims</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-file-text"></i> Claims Management</h2>
+                <p class="text-muted mb-0">Review and process claim requests from users</p>
+            </div>
+            @php $pendingCount = $claims->where('status', 'pending')->count(); @endphp
+            @if($pendingCount > 0)
+                <span class="badge bg-warning fs-6">{{ $pendingCount }} Pending</span>
+            @endif
+        </div>
         
         <div class="card">
             <div class="table-responsive">
@@ -15,12 +24,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($claims as $claim)
-                            <tr>
+                        @forelse($claims as $claim)
+                            <tr class="{{ $claim->status === 'pending' ? 'table-warning' : '' }}">
                                 <td>
-                                    <a href="{{ route('found-items.show', $claim->foundItem) }}">{{ $claim->foundItem->item_name }}</a>
+                                    <strong>{{ $claim->foundItem->item_name }}</strong>
+                                    <br><small class="text-muted">{{ $claim->foundItem->category }}</small>
                                 </td>
-                                <td>{{ $claim->user->name }}</td>
+                                <td>
+                                    {{ $claim->user->name }}
+                                    <br><small class="text-muted">{{ $claim->user->email }}</small>
+                                </td>
                                 <td>{{ $claim->created_at->format('M d, Y H:i') }}</td>
                                 <td>
                                     @if($claim->status === 'pending')
@@ -32,10 +45,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.claims.review', $claim) }}" class="btn btn-sm btn-warning">Review</a>
+                                    <a href="{{ route('admin.claims.review', $claim) }}" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i> Review
+                                    </a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">No claims found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

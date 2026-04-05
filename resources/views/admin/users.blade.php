@@ -1,6 +1,12 @@
 <x-app-layout>
     <div class="container py-4">
-        <h2 class="mb-4"><i class="bi bi-people"></i> Manage Users</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-people"></i> User Management</h2>
+                <p class="text-muted mb-0">Manage user roles and permissions</p>
+            </div>
+            <span class="badge bg-primary fs-6">{{ $users->total() }} Users</span>
+        </div>
         
         <div class="card">
             <div class="table-responsive">
@@ -16,14 +22,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
+                        @forelse($users as $user)
+                            <tr class="{{ $user->id === auth()->id() ? 'table-primary' : '' }}">
+                                <td>
+                                    <strong>{{ $user->name }}</strong>
+                                    @if($user->id === auth()->id())
+                                        <span class="badge bg-info ms-1">You</span>
+                                    @endif
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->department ?? '-' }}</td>
                                 <td>
                                     @if($user->role === 'admin')
-                                        <span class="badge bg-primary">Admin</span>
+                                        <span class="badge bg-primary"><i class="bi bi-shield-lock"></i> Admin</span>
                                     @else
                                         <span class="badge bg-secondary">User</span>
                                     @endif
@@ -33,8 +44,12 @@
                                     @if($user->id !== auth()->id())
                                         <form method="POST" action="{{ route('admin.users.toggle-admin', $user) }}" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-{{ $user->role === 'admin' ? 'outline-secondary' : 'outline-primary' }}">
-                                                {{ $user->role === 'admin' ? 'Remove Admin' : 'Make Admin' }}
+                                            <button type="submit" class="btn btn-sm btn-{{ $user->role === 'admin' ? 'outline-danger' : 'outline-primary' }}">
+                                                @if($user->role === 'admin')
+                                                    <i class="bi bi-person-dash"></i> Remove Admin
+                                                @else
+                                                    <i class="bi bi-person-plus"></i> Make Admin
+                                                @endif
                                             </button>
                                         </form>
                                     @else
@@ -42,7 +57,11 @@
                                     @endif
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">No users found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

@@ -1,6 +1,12 @@
 <x-app-layout>
     <div class="container py-4">
-        <h2 class="mb-4"><i class="bi bi-search"></i> Manage Lost Items</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1"><i class="bi bi-search"></i> Lost Reports Management</h2>
+                <p class="text-muted mb-0">Manage and track all lost item reports</p>
+            </div>
+            <span class="badge bg-danger fs-6">{{ $lostItems->total() }} Total</span>
+        </div>
         
         <div class="card">
             <div class="table-responsive">
@@ -10,19 +16,26 @@
                             <th>Item</th>
                             <th>Category</th>
                             <th>Location</th>
-                            <th>User</th>
-                            <th>Date</th>
+                            <th>Reported By</th>
+                            <th>Date Lost</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($lostItems as $item)
+                        @forelse($lostItems as $item)
                             <tr>
-                                <td>{{ $item->item_name }}</td>
-                                <td>{{ $item->category }}</td>
+                                <td>
+                                    <strong>{{ $item->item_name }}</strong>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ $item->category }}</span>
+                                </td>
                                 <td>{{ $item->location }}</td>
-                                <td>{{ $item->user->name }}</td>
+                                <td>
+                                    {{ $item->user->name }}
+                                    <br><small class="text-muted">{{ $item->user->department ?? 'N/A' }}</small>
+                                </td>
                                 <td>{{ $item->date_lost->format('M d, Y') }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('admin.lost-items.status', $item) }}" class="d-inline">
@@ -36,10 +49,16 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="{{ route('lost-items.show', $item) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                    <a href="{{ route('lost-items.show', $item) }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">No lost reports found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

@@ -133,18 +133,55 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('lost-items.index') }}">
-                            <i class="bi bi-search"></i> Lost Items
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('found-items.index') }}">
-                            <i class="bi bi-handbag"></i> Found Items
-                        </a>
-                    </li>
-                </ul>
+                @auth
+                    @if(Auth::user()->isAdmin())
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.lost-items') }}">
+                                    <i class="bi bi-search"></i> Lost Reports
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.found-items') }}">
+                                    <i class="bi bi-handbag"></i> Found Reports
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.claims') }}">
+                                    <i class="bi bi-file-text"></i> Claims
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.matches') }}">
+                                    <i class="bi bi-link"></i> Matches
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.users') }}">
+                                    <i class="bi bi-people"></i> Users
+                                </a>
+                            </li>
+                        </ul>
+                    @else
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('lost-items.index') }}">
+                                    <i class="bi bi-search"></i> Lost Items
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('found-items.index') }}">
+                                    <i class="bi bi-handbag"></i> Found Items
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
+                @endauth
                 <ul class="navbar-nav">
                     @guest
                         <li class="nav-item">
@@ -157,19 +194,20 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+                                @if(Auth::user()->isAdmin())
+                                    <span class="badge bg-warning text-dark ms-1">Admin</span>
+                                @endif
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lost-items.my-items') }}">My Lost Reports</a></li>
-                                <li><a class="dropdown-item" href="{{ route('found-items.my-items') }}">My Found Reports</a></li>
-                                <li><a class="dropdown-item" href="{{ route('claims.my-claims') }}">My Claims</a></li>
-                                <li><hr class="dropdown-divider"></li>
                                 @if(Auth::user()->isAdmin())
-                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                        <i class="bi bi-shield-lock"></i> Admin Panel
-                                    </a></li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('dashboard') }}">My Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('lost-items.my-items') }}">My Lost Reports</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('found-items.my-items') }}">My Found Reports</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('claims.my-claims') }}">My Claims</a></li>
                                 @endif
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
