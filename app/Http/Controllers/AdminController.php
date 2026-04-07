@@ -166,9 +166,23 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Match marked as reviewed.');
     }
 
-    public function users(): View
+    public function users(Request $request): View
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(15);
+        $query = User::query();
+
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->has('department') && $request->department) {
+            $query->where('department', $request->department);
+        }
+
+        $users = $query->orderBy('department', 'asc')->orderBy('name', 'asc')->paginate(15);
 
         return view('admin.users', compact('users'));
     }

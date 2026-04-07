@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\LostItem;
 use App\Models\FoundItem;
+use App\Models\Department;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,29 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        $departments = [
+            ['name' => 'Administration', 'code' => 'ADMIN', 'is_active' => true],
+            ['name' => 'Business Administration', 'code' => 'BUS', 'is_active' => true],
+            ['name' => 'Computer Science', 'code' => 'CS', 'is_active' => true],
+            ['name' => 'Economics', 'code' => 'ECON', 'is_active' => true],
+            ['name' => 'Education', 'code' => 'EDU', 'is_active' => true],
+            ['name' => 'Engineering', 'code' => 'ENG', 'is_active' => true],
+            ['name' => 'History', 'code' => 'HIST', 'is_active' => true],
+            ['name' => 'Information Technology', 'code' => 'IT', 'is_active' => true],
+            ['name' => 'Law', 'code' => 'LAW', 'is_active' => true],
+            ['name' => 'Literature', 'code' => 'LIT', 'is_active' => true],
+            ['name' => 'Mathematics', 'code' => 'MATH', 'is_active' => true],
+            ['name' => 'Medicine', 'code' => 'MED', 'is_active' => true],
+            ['name' => 'Music', 'code' => 'MUS', 'is_active' => true],
+            ['name' => 'Physics', 'code' => 'PHYS', 'is_active' => true],
+            ['name' => 'Psychology', 'code' => 'PSY', 'is_active' => true],
+            ['name' => 'Art & Design', 'code' => 'ART', 'is_active' => true],
+        ];
+
+        foreach ($departments as $dept) {
+            Department::create($dept);
+        }
+
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@campus.edu',

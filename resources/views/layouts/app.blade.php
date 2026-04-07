@@ -7,127 +7,232 @@
     <title>{{ config('app.name', 'Campus Lost & Found') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4F46E5;
+            --primary: #667eea;
+            --primary-dark: #764ba2;
             --secondary: #10B981;
             --accent: #F59E0B;
             --danger: #EF4444;
-            --bg-light: #F9FAFB;
-            --text-primary: #111827;
-            --text-secondary: #6B7280;
+            --bg-light: #f8f9fc;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
         }
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--bg-light);
             min-height: 100vh;
         }
+        
         .navbar {
-            background-color: var(--primary) !important;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
         }
-        .navbar-dark .navbar-nav .nav-link {
-            color: rgba(255,255,255,0.85);
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
         }
-        .navbar-dark .navbar-nav .nav-link:hover {
-            color: #fff;
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 0 4px;
         }
+        
+        .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 10px;
+        }
+        
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
         .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
+        
         .btn-primary:hover {
-            background-color: #4338CA;
-            border-color: #4338CA;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
+        
         .btn-success {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+            border: none;
         }
-        .btn-success:hover {
-            background-color: #059669;
-            border-color: #059669;
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            border: none;
         }
-        .btn-warning {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
+        
         .card {
             border: none;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
         }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        
         .card-lost {
             border-left: 4px solid var(--danger);
         }
+        
         .card-found {
             border-left: 4px solid var(--secondary);
         }
+        
         .badge-status {
             font-size: 0.75rem;
-            padding: 0.35em 0.65em;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-weight: 500;
         }
-        .status-unclaimed { background-color: #6B7280; }
-        .status-pending_claim { background-color: var(--accent); }
-        .status-claimed { background-color: var(--secondary); }
-        .status-matched { background-color: var(--primary); }
-        .status-resolved { background-color: #10B981; }
-        .sidebar {
-            background: #fff;
-            min-height: calc(100vh - 56px);
-            border-right: 1px solid #e5e7eb;
-        }
-        .sidebar .nav-link {
-            color: var(--text-secondary);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin: 0.25rem 0.5rem;
-        }
-        .sidebar .nav-link:hover {
-            background-color: #F3F4F6;
-            color: var(--primary);
-        }
-        .sidebar .nav-link.active {
-            background-color: var(--primary);
-            color: #fff;
-        }
+        
+        .status-unclaimed { background: #e5e7eb; color: #374151; }
+        .status-pending_claim { background: #fef3c7; color: #92400e; }
+        .status-claimed { background: #d1fae5; color: #065f46; }
+        .status-matched { background: #e0e7ff; color: #4338ca; }
+        .status-resolved { background: #d1fae5; color: #065f46; }
+        
         .stat-card {
-            border-radius: 8px;
+            border-radius: 16px;
             padding: 1.5rem;
             color: #fff;
+            transition: all 0.3s;
         }
-        .stat-card.primary { background-color: var(--primary); }
-        .stat-card.success { background-color: var(--secondary); }
-        .stat-card.warning { background-color: var(--accent); }
-        .stat-card.danger { background-color: var(--danger); }
-        .match-score {
-            font-size: 1.5rem;
-            font-weight: bold;
+        
+        .stat-card:hover {
+            transform: scale(1.02);
         }
+        
+        .stat-card.primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .stat-card.success { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #F59E0B 0%, #d97706 100%); }
+        .stat-card.danger { background: linear-gradient(135deg, #EF4444 0%, #dc2626 100%); }
+        
         .item-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 8px 8px 0 0;
+            border-radius: 16px 16px 0 0;
         }
+        
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--text-secondary);
         }
+        
+        .empty-state i {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+        
         .form-section {
             background: #fff;
-            border-radius: 8px;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .alert {
+            border-radius: 12px;
+            border: none;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .table thead th {
+            background: #f8f9fc;
+            border-bottom: 2px solid #e5e7eb;
+            color: #374151;
+            font-weight: 600;
+        }
+        
+        .table-hover tbody tr {
+            transition: all 0.2s;
+        }
+        
+        .table-hover tbody tr:hover {
+            background: #f8f9fc;
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-search"></i> Campus Lost & Found
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+                <i class="bi bi-search me-2"></i>
+                <span>Campus Lost & Found</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -138,32 +243,37 @@
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                    <i class="bi bi-speedometer2 me-1"></i> Dashboard
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.lost-items') }}">
-                                    <i class="bi bi-search"></i> Lost Reports
+                                    <i class="bi bi-search me-1"></i> Lost Reports
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.found-items') }}">
-                                    <i class="bi bi-handbag"></i> Found Reports
+                                    <i class="bi bi-handbag me-1"></i> Found Reports
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.claims') }}">
-                                    <i class="bi bi-file-text"></i> Claims
+                                    <i class="bi bi-file-text me-1"></i> Claims
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.matches') }}">
-                                    <i class="bi bi-link"></i> Matches
+                                    <i class="bi bi-link-45deg me-1"></i> Matches
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.users') }}">
-                                    <i class="bi bi-people"></i> Users
+                                    <i class="bi bi-people me-1"></i> Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.departments') }}">
+                                    <i class="bi bi-building me-1"></i> Departments
                                 </a>
                             </li>
                         </ul>
@@ -171,12 +281,12 @@
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('lost-items.index') }}">
-                                    <i class="bi bi-search"></i> Lost Items
+                                    <i class="bi bi-search me-1"></i> Lost Items
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('found-items.index') }}">
-                                    <i class="bi bi-handbag"></i> Found Items
+                                    <i class="bi bi-handbag me-1"></i> Found Items
                                 </a>
                             </li>
                         </ul>
@@ -185,34 +295,37 @@
                 <ul class="navbar-nav">
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-1"></i> Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Register</a>
+                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-person-plus me-1"></i> Register</a>
                         </li>
                     @else
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                <div class="avatar-sm me-2">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                                {{ Auth::user()->name }}
                                 @if(Auth::user()->isAdmin())
-                                    <span class="badge bg-warning text-dark ms-1">Admin</span>
+                                    <span class="badge bg-warning text-dark ms-2">Admin</span>
                                 @endif
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 @if(Auth::user()->isAdmin())
-                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
                                 @else
-                                    <li><a class="dropdown-item" href="{{ route('dashboard') }}">My Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('lost-items.my-items') }}">My Lost Reports</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('found-items.my-items') }}">My Found Reports</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('claims.my-claims') }}">My Claims</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('dashboard') }}"><i class="bi bi-house me-2"></i>My Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('lost-items.my-items') }}"><i class="bi bi-search me-2"></i>My Lost Reports</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('found-items.my-items') }}"><i class="bi bi-handbag me-2"></i>My Found Reports</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('claims.my-claims') }}"><i class="bi bi-file-text me-2"></i>My Claims</a></li>
                                 @endif
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person-gear me-2"></i>Profile</a></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
+                                        <button type="submit" class="dropdown-item text-danger"><i class="bi bi-box-arrow-left me-2"></i>Logout</button>
                                     </form>
                                 </li>
                             </ul>
@@ -226,7 +339,8 @@
     <main>
         @if(session('success'))
             <div class="container mt-3">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -234,7 +348,8 @@
         @endif
         @if(session('error'))
             <div class="container mt-3">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -243,12 +358,27 @@
         {{ $slot }}
     </main>
 
-    <footer class="bg-white border-top mt-5 py-4">
-        <div class="container text-center text-muted">
-            <small>Campus Lost & Found System &copy; {{ date('Y') }}</small>
+    <footer class="py-4">
+        <div class="container text-center">
+            <small><i class="bi bi-search me-1"></i> Campus Lost & Found System &copy; {{ date('Y') }} | Made with <i class="bi bi-heart-fill text-danger"></i> for our campus community</small>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
 </body>
 </html>

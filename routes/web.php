@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FoundItemController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LostItemController;
@@ -48,6 +49,11 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('departments');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::patch('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::post('/departments/{department}/toggle', [DepartmentController::class, 'toggleStatus'])->name('departments.toggle');
+    Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     Route::get('/lost-items', [AdminController::class, 'lostItems'])->name('lost-items');
     Route::patch('/lost-items/{lostItem}/status', [AdminController::class, 'updateLostItemStatus'])->name('lost-items.status');
     Route::get('/found-items', [AdminController::class, 'foundItems'])->name('found-items');
