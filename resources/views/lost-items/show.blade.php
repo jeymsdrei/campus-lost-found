@@ -7,7 +7,7 @@
                         <img src="{{ asset('storage/' . $lostItem->image) }}" alt="{{ $lostItem->item_name }}" class="img-fluid rounded-start h-100" style="object-fit: cover;">
                     @else
                         <div class="bg-light d-flex align-items-center justify-content-center h-100 min-vh-300">
-                            <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 130px; height: 130px;">
+                            <i class="bi bi-search text-muted" style="font-size: 5rem;"></i>
                         </div>
                     @endif
                 </div>

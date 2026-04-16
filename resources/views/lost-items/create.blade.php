@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-section">
-                    <h3 class="mb-4"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;"> Report Lost Item</h3>
+                    <h3 class="mb-4"><i class="bi bi-search text-danger"></i> Report Lost Item</h3>
                     <form method="POST" action="{{ route('lost-items.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">

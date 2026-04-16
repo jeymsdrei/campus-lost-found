@@ -2,7 +2,7 @@
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2 class="mb-1"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;"> Lost Reports Management</h2>
+                <h2 class="mb-1"><i class="bi bi-search"></i> Lost Reports Management</h2>
                 <p class="text-muted mb-0">Manage and track all lost item reports</p>
             </div>
             <span class="badge bg-danger fs-6">{{ $lostItems->total() }} Total</span>

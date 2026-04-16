@@ -310,7 +310,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-3">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <i class="bi bi-search me-2"></i>
+                <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 32px; height: 32px; margin-right: 8px;">
                 <span>Campus Lost & Found</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

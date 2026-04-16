@@ -18,7 +18,7 @@
                 <div class="stat-card primary h-100">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon me-3">
-                            <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px;">
+                            <i class="bi bi-search"></i>
                         </div>
                         <div>
                             <h6 class="mb-0 opacity-75">Total Lost</h6>
@@ -72,13 +72,13 @@
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header bg-transparent border-0 pt-4 pb-0">
-                        <h4 class="mb-0"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;">Recent Lost Items</h4>
+                        <h4 class="mb-0"><i class="bi bi-search text-danger me-2"></i>Recent Lost Items</h4>
                     </div>
                     <div class="card-body">
                         @forelse($recentLostItems as $item)
                             <div class="d-flex align-items-center mb-3 p-3 rounded" style="background: #fef2f2;">
                                 <div class="lost-icon me-3">
-                                    <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 30px; height: 30px;">
+                                    <i class="bi bi-search"></i>
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-0 fw-semibold">{{ $item->item_name }}</h6>
@@ -88,7 +88,7 @@
                             </div>
                         @empty
                             <div class="text-center py-4">
-                                <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 80px; height: 80px; opacity: 0.3;">
+                                <i class="bi bi-search text-muted" style="font-size: 3rem; opacity: 0.3;"></i>
                                 <p class="text-muted mt-2">No lost items reported yet</p>
                             </div>
                         @endforelse
