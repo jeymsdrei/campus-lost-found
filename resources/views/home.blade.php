@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container py-4">
         <div class="page-header text-center">
-            <h1 class="mb-2"><i class="bi bi-search me-2"></i>Welcome to Campus Lost & Found</h1>
+            <h1 class="mb-2"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 50px; height: 50px; vertical-align: middle; margin-right: 10px;">Welcome to Campus Lost & Found</h1>
             <p class="mb-0 opacity-75">Help reunite lost items with their owners. Report lost items or help identify found items.</p>
             <div class="mt-3">
                 <a href="{{ route('login') }}" class="btn btn-light btn-lg me-2">
@@ -18,7 +18,7 @@
                 <div class="stat-card primary h-100">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon me-3">
-                            <i class="bi bi-search"></i>
+                            <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px;">
                         </div>
                         <div>
                             <h6 class="mb-0 opacity-75">Total Lost</h6>
@@ -72,13 +72,13 @@
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header bg-transparent border-0 pt-4 pb-0">
-                        <h4 class="mb-0"><i class="bi bi-search text-danger me-2"></i>Recent Lost Items</h4>
+                        <h4 class="mb-0"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;">Recent Lost Items</h4>
                     </div>
                     <div class="card-body">
                         @forelse($recentLostItems as $item)
                             <div class="d-flex align-items-center mb-3 p-3 rounded" style="background: #fef2f2;">
                                 <div class="lost-icon me-3">
-                                    <i class="bi bi-search"></i>
+                                    <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 30px; height: 30px;">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-0 fw-semibold">{{ $item->item_name }}</h6>
@@ -88,7 +88,7 @@
                             </div>
                         @empty
                             <div class="text-center py-4">
-                                <i class="bi bi-search text-muted" style="font-size: 3rem; opacity: 0.3;"></i>
+                                <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 80px; height: 80px; opacity: 0.3;">
                                 <p class="text-muted mt-2">No lost items reported yet</p>
                             </div>
                         @endforelse

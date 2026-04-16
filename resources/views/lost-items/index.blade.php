@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="bi bi-search"></i> Lost Items</h2>
+            <h2><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;"> Lost Items</h2>
             @auth
                 <a href="{{ route('lost-items.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Report Lost Item
@@ -31,7 +31,7 @@
 
         @if($lostItems->isEmpty())
             <div class="empty-state card">
-                <i class="bi bi-search" style="font-size: 4rem;"></i>
+                <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
                 <h4 class="mt-3">No Lost Items Found</h4>
                 <p class="text-muted">No items match your search criteria.</p>
             </div>
@@ -44,7 +44,7 @@
                                 <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->item_name }}" class="item-image">
                             @else
                                 <div class="bg-light d-flex align-items-center justify-content-center item-image">
-                                    <i class="bi bi-search text-muted" style="font-size: 3rem;"></i>
+                                    <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 80px; height: 80px;">
                                 </div>
                             @endif
                             <div class="card-body">

@@ -9,7 +9,7 @@
             <div class="col-md-3">
                 <a href="{{ route('admin.lost-items') }}" class="text-decoration-none">
                     <div class="card text-center p-3 border-danger">
-                        <i class="bi bi-search text-danger" style="font-size: 2rem;"></i>
+                        <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 60px; height: 60px; margin: 0 auto; display: block;">
                         <h3 class="mt-2 mb-0">{{ $stats['totalLost'] }}</h3>
                         <small class="text-muted">Lost Reports</small>
                     </div>
@@ -106,7 +106,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-search"></i> Recent Lost Reports</h5>
+                        <h5 class="mb-0"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;"> Recent Lost Reports</h5>
                         <a href="{{ route('admin.lost-items') }}" class="btn btn-sm btn-outline-danger">View All</a>
                     </div>
                     <div class="table-responsive">

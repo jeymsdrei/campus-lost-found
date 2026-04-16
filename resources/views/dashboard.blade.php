@@ -6,7 +6,7 @@
             <div class="col-md-3">
                 <a href="{{ route('lost-items.my-items') }}" class="text-decoration-none">
                     <div class="card text-center p-3">
-                        <i class="bi bi-search text-danger" style="font-size: 2rem;"></i>
+                        <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 60px; height: 60px; margin: 0 auto; display: block;">
                         <h4 class="mt-2 mb-0">{{ Auth::user()->lostItems()->count() }}</h4>
                         <small class="text-muted">My Lost Reports</small>
                     </div>
@@ -45,7 +45,7 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-search"></i> Report Lost Item</h5>
+                        <h5 class="mb-0"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;"> Report Lost Item</h5>
                     </div>
                     <div class="card-body">
                         <p class="text-muted">Lost something on campus? Submit a report to help find it.</p>
@@ -74,12 +74,12 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-search"></i> Browse Lost Items</h5>
+                        <h5 class="mb-0"><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;"> Browse Lost Items</h5>
                     </div>
                     <div class="card-body">
                         <p class="text-muted">Search through reported lost items to see if someone found your item.</p>
                         <a href="{{ route('lost-items.index') }}" class="btn btn-outline-danger w-100">
-                            <i class="bi bi-search"></i> View Lost Items
+                            <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 25px; height: 25px; vertical-align: middle; margin-right: 5px;"> View Lost Items
                         </a>
                     </div>
                 </div>

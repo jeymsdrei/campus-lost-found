@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="bi bi-search"></i> My Lost Items</h2>
+            <h2><img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;"> My Lost Items</h2>
             <a href="{{ route('lost-items.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Report New
             </a>
@@ -9,7 +9,7 @@
 
         @if($lostItems->isEmpty())
             <div class="empty-state card">
-                <i class="bi bi-search" style="font-size: 4rem;"></i>
+                <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
                 <h4 class="mt-3">No Lost Items Reported</h4>
                 <p class="text-muted">You haven't reported any lost items yet.</p>
                 <a href="{{ route('lost-items.create') }}" class="btn btn-primary mt-3">Report Lost Item</a>
