@@ -176,6 +176,34 @@ $departments = \App\Models\Department::where('is_active', true)->orderBy('name',
                 @enderror
             </div>
 
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label for="year_level" class="form-label"><i class="bi bi-calendar3 me-2"></i>Year Level *</label>
+                    <select class="form-select @error('year_level') is-invalid @enderror" id="year_level" name="year_level" required>
+                        <option value="" selected disabled>Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    @error('year_level')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-6 mb-3">
+                    <label for="semester" class="form-label"><i class="bi bi-calendar-week me-2"></i>Semester *</label>
+                    <select class="form-select @error('semester') is-invalid @enderror" id="semester" name="semester" required>
+                        <option value="" selected disabled>Semester</option>
+                        <option value="1st">1st Semester</option>
+                        <option value="2nd">2nd Semester</option>
+                    </select>
+                    @error('semester')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
             <div class="mb-3">
                 <label for="phone" class="form-label"><i class="bi bi-phone me-2"></i>Phone Number</label>
                 <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" autocomplete="tel" placeholder="Optional">

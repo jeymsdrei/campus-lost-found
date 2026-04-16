@@ -23,6 +23,8 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'phone' => ['nullable', 'string', 'max:20'],
             'department' => ['nullable', 'string', 'max:100'],
+            'year_level' => ['nullable', 'integer', 'min:1', 'max:4'],
+            'semester' => ['nullable', 'string', 'in:1st,2nd'],
         ];
     }
 }

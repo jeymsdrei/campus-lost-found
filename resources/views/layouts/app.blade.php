@@ -27,6 +27,7 @@
         body {
             background-color: var(--bg-light);
             min-height: 100vh;
+            padding-top: 56px;
         }
         
         .navbar {
@@ -37,6 +38,7 @@
         .navbar-brand {
             font-weight: 700;
             font-size: 1.25rem;
+            margin-left: -0.4rem;
         }
         
         .nav-link {
@@ -210,8 +212,25 @@
         }
         
         .btn {
-            border-radius: 8px;
-            font-weight: 500;
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 0.9rem 1.4rem;
+            min-height: 48px;
+            transition: all 0.2s;
+        }
+
+        .btn-sm {
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            min-height: 44px;
+        }
+
+        .btn-group-sm .btn {
+            padding: 0.7rem 0.95rem;
+        }
+
+        .btn-full {
+            width: 100%;
         }
         
         .form-control, .form-select {
@@ -225,11 +244,71 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
+        
+        .sidebar {
+            width: 270px;
+            height: calc(100vh - 56px);
+            position: fixed;
+            top: 56px;
+            left: 0;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 4px 15px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .sidebar-link:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem 2rem 2rem 1.5rem;
+            min-width: 0;
+            margin-left: 270px;
+        }
+
+        .main-content > .container,
+        .main-content .container {
+            width: 100%;
+            max-width: none;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid px-3">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
                 <i class="bi bi-search me-2"></i>
                 <span>Campus Lost & Found</span>
@@ -239,60 +318,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 @auth
-                    @if(Auth::user()->isAdmin())
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-speedometer2 me-1"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.lost-items') }}">
-                                    <i class="bi bi-search me-1"></i> Lost Reports
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.found-items') }}">
-                                    <i class="bi bi-handbag me-1"></i> Found Reports
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.claims') }}">
-                                    <i class="bi bi-file-text me-1"></i> Claims
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.matches') }}">
-                                    <i class="bi bi-link-45deg me-1"></i> Matches
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.users') }}">
-                                    <i class="bi bi-people me-1"></i> Users
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.departments') }}">
-                                    <i class="bi bi-building me-1"></i> Departments
-                                </a>
-                            </li>
-                        </ul>
-                    @else
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('lost-items.index') }}">
-                                    <i class="bi bi-search me-1"></i> Lost Items
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('found-items.index') }}">
-                                    <i class="bi bi-handbag me-1"></i> Found Items
-                                </a>
-                            </li>
-                        </ul>
-                    @endif
                 @endauth
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-1"></i> Login</a>
@@ -355,14 +382,77 @@
                 </div>
             </div>
         @endif
-        {{ $slot }}
+        @auth
+            @if(Auth::user()->isAdmin())
+                <div class="d-flex">
+                    <div class="sidebar">
+                        <div class="sidebar-header p-3 border-bottom">
+                            <h6 class="mb-0"><i class="bi bi-gear me-2"></i>Admin Panel</h6>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <a class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.lost-items*') ? 'active' : '' }}" href="{{ route('admin.lost-items') }}">
+                                <i class="bi bi-search me-2"></i> Lost Reports
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.found-items*') ? 'active' : '' }}" href="{{ route('admin.found-items') }}">
+                                <i class="bi bi-handbag me-2"></i> Found Reports
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.claims*') ? 'active' : '' }}" href="{{ route('admin.claims') }}">
+                                <i class="bi bi-file-text me-2"></i> Claims
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.matches*') ? 'active' : '' }}" href="{{ route('admin.matches') }}">
+                                <i class="bi bi-link-45deg me-2"></i> Matches
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                                <i class="bi bi-people me-2"></i> Users
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.departments*') ? 'active' : '' }}" href="{{ route('admin.departments') }}">
+                                <i class="bi bi-building me-2"></i> Departments
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="main-content">
+                        {{ $slot }}
+                    </div>
+                </div>
+            @else
+                <div class="d-flex">
+                    <div class="sidebar">
+                        <div class="sidebar-header p-3 border-bottom">
+                            <h6 class="mb-0"><i class="bi bi-person me-2"></i>User Panel</h6>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <a class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                                <i class="bi bi-house me-2"></i> Dashboard
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('lost-items.index') ? 'active' : '' }}" href="{{ route('lost-items.index') }}">
+                                <i class="bi bi-search me-2"></i> Lost Items
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('found-items.index') ? 'active' : '' }}" href="{{ route('found-items.index') }}">
+                                <i class="bi bi-handbag me-2"></i> Found Items
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('lost-items.my-items') ? 'active' : '' }}" href="{{ route('lost-items.my-items') }}">
+                                <i class="bi bi-search me-2"></i> My Lost Reports
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('found-items.my-items') ? 'active' : '' }}" href="{{ route('found-items.my-items') }}">
+                                <i class="bi bi-handbag me-2"></i> My Found Reports
+                            </a>
+                            <a class="sidebar-link {{ request()->routeIs('claims.my-claims') ? 'active' : '' }}" href="{{ route('claims.my-claims') }}">
+                                <i class="bi bi-file-text me-2"></i> My Claims
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="main-content">
+                        {{ $slot }}
+                    </div>
+                </div>
+            @endif
+        @else
+            {{ $slot }}
+        @endauth
     </main>
-
-    <footer class="py-4">
-        <div class="container text-center">
-            <small><i class="bi bi-search me-1"></i> Campus Lost & Found System &copy; {{ date('Y') }} | Made with <i class="bi bi-heart-fill text-danger"></i> for our campus community</small>
-        </div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     

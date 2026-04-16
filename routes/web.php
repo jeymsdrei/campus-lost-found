@@ -66,6 +66,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/matches/{match}/reviewed', [AdminController::class, 'markMatchReviewed'])->name('matches.reviewed');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::post('/users/{user}/toggle-admin', [AdminController::class, 'toggleAdmin'])->name('users.toggle-admin');
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
 });
 
 require __DIR__.'/auth.php';
