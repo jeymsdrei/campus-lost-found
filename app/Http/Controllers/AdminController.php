@@ -168,7 +168,7 @@ class AdminController extends Controller
 
     public function users(Request $request): View
     {
-        $query = User::query();
+        $query = User::where('role', '!=', 'admin');
 
         if ($request->has('search') && $request->search) {
             $search = $request->search;
@@ -182,7 +182,15 @@ class AdminController extends Controller
             $query->where('department', $request->department);
         }
 
-        $users = $query->orderBy('department', 'asc')->orderBy('name', 'asc')->paginate(15);
+        if ($request->has('year_level') && $request->year_level) {
+            $query->where('year_level', $request->year_level);
+        }
+
+        if ($request->has('semester') && $request->semester) {
+            $query->where('semester', $request->semester);
+        }
+
+        $users = $query->orderBy('department', 'asc')->orderBy('year_level', 'asc')->orderBy('name', 'asc')->paginate(50);
 
         return view('admin.users', compact('users'));
     }
@@ -197,5 +205,17 @@ class AdminController extends Controller
         $user->update(['role' => $newRole]);
 
         return redirect()->back()->with('success', 'User role updated successfully.');
+    }
+
+    public function destroyUser(User $user): RedirectResponse
+    {
+        if ($user->id === Auth::id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $userName = $user->name;
+        $user->delete();
+
+        return redirect()->back()->with('success', "User '{$userName}' deleted successfully.");
     }
 }

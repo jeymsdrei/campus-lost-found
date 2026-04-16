@@ -72,14 +72,15 @@ class DepartmentController extends Controller
 
     public function destroy(Department $department): RedirectResponse
     {
-        $hasUsers = $department->users()->count();
+        $hasUsers = \App\Models\User::where('department', $department->name)->count();
         
         if ($hasUsers > 0) {
             return redirect()->back()->with('error', "Cannot delete department. {$hasUsers} user(s) are assigned to this department.");
         }
 
+        $deptName = $department->name;
         $department->delete();
 
-        return redirect()->back()->with('success', 'Department deleted successfully.');
+        return redirect()->back()->with('success', "Department '{$deptName}' deleted successfully.");
     }
 }
