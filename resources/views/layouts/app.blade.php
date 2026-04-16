@@ -331,15 +331,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
                                 <div class="avatar-sm me-2">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
-                                {{ Auth::user()->name }}
-                                @if(Auth::user()->isAdmin())
+                                {{ auth()->user()->name }}
+                                @if(auth()->user()->isAdmin())
                                     <span class="badge bg-warning text-dark ms-2">Admin</span>
                                 @endif
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                @if(Auth::user()->isAdmin())
+                                @if(auth()->user()->isAdmin())
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
                                 @else
                                     <li><a class="dropdown-item" href="{{ route('dashboard') }}"><i class="bi bi-house me-2"></i>My Dashboard</a></li>
@@ -383,7 +383,7 @@
             </div>
         @endif
         @auth
-            @if(Auth::user()->isAdmin())
+            @if(auth()->user()->isAdmin())
                 <div class="d-flex">
                     <div class="sidebar">
                         <div class="sidebar-header p-3 border-bottom">
