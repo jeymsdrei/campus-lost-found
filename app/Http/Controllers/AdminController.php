@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ClaimRequest;
 use App\Models\FoundItem;
-use App\Models\ItemMatch;
 use App\Models\LostItem;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,8 +19,6 @@ class AdminController extends Controller
             'totalLost' => LostItem::count(),
             'totalFound' => FoundItem::count(),
             'pendingClaims' => ClaimRequest::where('status', 'pending')->count(),
-            'totalMatches' => ItemMatch::count(),
-            'unreviewedMatches' => ItemMatch::where('is_reviewed', false)->count(),
             'claimedItems' => FoundItem::where('status', 'claimed')->count(),
         ];
 
@@ -41,17 +38,11 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        $recentMatches = ItemMatch::with(['lostItem', 'foundItem'])
-            ->orderBy('match_score', 'desc')
-            ->take(5)
-            ->get();
-
         return view('admin.dashboard', compact(
             'stats',
             'recentLostItems',
             'recentFoundItems',
-            'pendingClaims',
-            'recentMatches'
+            'pendingClaims'
         ));
     }
 
@@ -148,22 +139,6 @@ class AdminController extends Controller
 
         return redirect()->route('admin.claims')
             ->with('success', 'Claim rejected.');
-    }
-
-    public function matches(): View
-    {
-        $matches = ItemMatch::with(['lostItem', 'foundItem'])
-            ->orderBy('match_score', 'desc')
-            ->paginate(15);
-
-        return view('admin.matches', compact('matches'));
-    }
-
-    public function markMatchReviewed(ItemMatch $match): RedirectResponse
-    {
-        $match->update(['is_reviewed' => true]);
-
-        return redirect()->back()->with('success', 'Match marked as reviewed.');
     }
 
     public function users(Request $request): View

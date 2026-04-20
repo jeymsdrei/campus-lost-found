@@ -62,8 +62,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/claims/{claim}/review', [AdminController::class, 'reviewClaim'])->name('claims.review');
     Route::post('/claims/{claim}/approve', [AdminController::class, 'approveClaim'])->name('claims.approve');
     Route::post('/claims/{claim}/reject', [AdminController::class, 'rejectClaim'])->name('claims.reject');
-    Route::get('/matches', [AdminController::class, 'matches'])->name('matches');
-    Route::post('/matches/{match}/reviewed', [AdminController::class, 'markMatchReviewed'])->name('matches.reviewed');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::post('/users/{user}/toggle-admin', [AdminController::class, 'toggleAdmin'])->name('users.toggle-admin');
     Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');

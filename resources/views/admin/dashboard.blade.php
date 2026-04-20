@@ -33,15 +33,6 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
-                <a href="{{ route('admin.matches') }}" class="text-decoration-none">
-                    <div class="card text-center p-3 border-primary">
-                        <i class="bi bi-link text-primary" style="font-size: 2rem;"></i>
-                        <h3 class="mt-2 mb-0">{{ $stats['unreviewedMatches'] }}</h3>
-                        <small class="text-muted">Unreviewed Matches</small>
-                    </div>
-                </a>
-            </div>
         </div>
 
         @if($stats['pendingClaims'] > 0)
@@ -72,30 +63,6 @@
                             </div>
                         @empty
                             <div class="p-3 text-center text-muted">No pending claims</div>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-link"></i> Recent Matches</h5>
-                        <a href="{{ route('admin.matches') }}" class="btn btn-sm btn-outline-primary">View All</a>
-                    </div>
-                    <div class="card-body p-0">
-                        @forelse($recentMatches as $match)
-                            <div class="d-flex align-items-center p-3 border-bottom">
-                                <div class="flex-grow-1">
-                                    <small class="text-muted">Lost: {{ $match->lostItem->item_name }}</small>
-                                    <br><small class="text-muted">Found: {{ $match->foundItem->item_name }}</small>
-                                </div>
-                                <span class="badge bg-{{ $match->match_score >= 70 ? 'success' : ($match->match_score >= 50 ? 'warning' : 'secondary') }}">
-                                    {{ $match->match_score }}%
-                                </span>
-                            </div>
-                        @empty
-                            <div class="p-3 text-center text-muted">No matches found</div>
                         @endforelse
                     </div>
                 </div>

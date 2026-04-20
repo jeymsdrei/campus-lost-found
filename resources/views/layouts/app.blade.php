@@ -402,9 +402,6 @@
                             <a class="sidebar-link {{ request()->routeIs('admin.claims*') ? 'active' : '' }}" href="{{ route('admin.claims') }}">
                                 <i class="bi bi-file-text me-2"></i> Claims
                             </a>
-                            <a class="sidebar-link {{ request()->routeIs('admin.matches*') ? 'active' : '' }}" href="{{ route('admin.matches') }}">
-                                <i class="bi bi-link-45deg me-2"></i> Matches
-                            </a>
                             <a class="sidebar-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
                                 <i class="bi bi-people me-2"></i> Users
                             </a>

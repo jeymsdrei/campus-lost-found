@@ -45,27 +45,7 @@
                             </div>
                         </div>
 
-                        @if($matches->isNotEmpty())
-                            <div class="alert alert-info">
-                                <h5><i class="bi bi-lightbulb"></i> Possible Matches Found</h5>
-                                <p class="mb-2">Based on your report, we found {{ $matches->count() }} possible matching found item(s):</p>
-                                @foreach($matches as $match)
-                                    <div class="d-flex align-items-center p-2 border rounded mb-2">
-                                        <div class="flex-grow-1">
-                                            <a href="{{ route('found-items.show', $match->foundItem) }}" class="text-decoration-none">
-                                                <strong>{{ $match->foundItem->item_name }}</strong>
-                                            </a>
-                                            <br><small class="text-muted">{{ $match->foundItem->location }}</small>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="badge bg-{{ $match->match_score >= 70 ? 'success' : ($match->match_score >= 50 ? 'warning' : 'secondary') }}">
-                                                {{ $match->match_score }}% Match
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
+
 
                         <div class="d-flex gap-2">
                             <a href="{{ route('lost-items.index') }}" class="btn btn-outline-secondary">Back to List</a>

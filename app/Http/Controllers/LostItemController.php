@@ -73,12 +73,7 @@ class LostItemController extends Controller
 
     public function show(LostItem $lostItem): View
     {
-        $matches = $lostItem->itemMatches()
-            ->with('foundItem')
-            ->orderBy('match_score', 'desc')
-            ->get();
-
-        return view('lost-items.show', compact('lostItem', 'matches'));
+        return view('lost-items.show', compact('lostItem'));
     }
 
     public function edit(LostItem $lostItem): View

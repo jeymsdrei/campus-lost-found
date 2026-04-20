@@ -1,7 +1,4 @@
 <x-app-layout>
-    @php
-    use Illuminate\Support\Str;
-    @endphp
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="bi bi-search"></i> Lost Items</h2>

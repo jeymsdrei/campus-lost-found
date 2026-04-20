@@ -32,7 +32,7 @@ class MatchingService
             }
         }
 
-        $lostItem->update(['status' => 'matched']);
+        $foundItem->update(['status' => 'matched']);
     }
 
     public function findMatchesForLostItem(LostItem $lostItem): void
@@ -55,6 +55,8 @@ class MatchingService
                 );
             }
         }
+
+        $lostItem->update(['status' => 'matched']);
     }
 
     public function calculateMatchScore(LostItem $lostItem, FoundItem $foundItem): float

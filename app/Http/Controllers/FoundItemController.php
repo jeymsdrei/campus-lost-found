@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\FoundItem;
 use App\Models\ItemMatch;
-use App\Services\MatchingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -47,7 +46,7 @@ class FoundItemController extends Controller
         return view('found-items.create');
     }
 
-    public function store(Request $request, MatchingService $matchingService): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'item_name' => ['required', 'string', 'max:255'],
@@ -68,24 +67,17 @@ class FoundItemController extends Controller
 
         $foundItem = FoundItem::create($validated);
 
-        $matchingService->findMatchesForFoundItem($foundItem);
-
         return redirect()->route('found-items.show', $foundItem)
             ->with('success', 'Found item reported successfully.');
     }
 
     public function show(FoundItem $foundItem): View
     {
-        $matches = $foundItem->itemMatches()
-            ->with('lostItem')
-            ->orderBy('match_score', 'desc')
-            ->get();
-
         $hasClaimed = $foundItem->claimRequests()
             ->where('user_id', Auth::id())
             ->exists();
 
-        return view('found-items.show', compact('foundItem', 'matches', 'hasClaimed'));
+        return view('found-items.show', compact('foundItem', 'hasClaimed'));
     }
 
     public function edit(FoundItem $foundItem): View
