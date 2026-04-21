@@ -45,8 +45,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="d-flex gap-2">
                             <a href="{{ route('lost-items.index') }}" class="btn btn-outline-secondary">Back to List</a>
                         </div>

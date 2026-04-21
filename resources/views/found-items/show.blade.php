@@ -45,8 +45,6 @@
                             </div>
                         </div>
 
-
-
                         @auth
                             @if($foundItem->status !== 'claimed' && !$hasClaimed)
                                 <div class="d-grid gap-2 mb-3">
