@@ -5,28 +5,28 @@
             <span class="badge bg-primary">Administrator</span>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-md-3">
+        <div class="row mb-4 gx-4">
+            <div class="col-md-4">
                 <a href="{{ route('admin.lost-items') }}" class="text-decoration-none">
-                    <div class="card text-center p-3 border-danger">
+                    <div class="card text-center p-3 border-danger h-100">
                         <i class="bi bi-search text-danger" style="font-size: 2rem;"></i>
                         <h3 class="mt-2 mb-0">{{ $stats['totalLost'] }}</h3>
                         <small class="text-muted">Lost Reports</small>
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a href="{{ route('admin.found-items') }}" class="text-decoration-none">
-                    <div class="card text-center p-3 border-success">
+                    <div class="card text-center p-3 border-success h-100">
                         <i class="bi bi-handbag text-success" style="font-size: 2rem;"></i>
                         <h3 class="mt-2 mb-0">{{ $stats['totalFound'] }}</h3>
                         <small class="text-muted">Found Reports</small>
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a href="{{ route('admin.claims') }}" class="text-decoration-none">
-                    <div class="card text-center p-3 border-warning">
+                    <div class="card text-center p-3 border-warning h-100">
                         <i class="bi bi-file-text text-warning" style="font-size: 2rem;"></i>
                         <h3 class="mt-2 mb-0">{{ $stats['pendingClaims'] }}</h3>
                         <small class="text-muted">Pending Claims</small>

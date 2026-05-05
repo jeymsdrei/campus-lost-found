@@ -20,7 +20,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-sm w-100">Filter</button>
+                <button type="submit" class="btn btn-primary btn-sm w-100">Search</button>
             </div>
             <div class="col-md-2">
                 <a href="{{ route('admin.departments') }}" class="btn btn-secondary btn-sm w-100">Reset</a>

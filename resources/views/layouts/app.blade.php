@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Campus Lost & Found') }}</title>
+    <script>
+        try {
+            if (localStorage.getItem('sidebarOpen') === 'true') {
+                document.documentElement.classList.add('sidebar-open-persisted', 'sidebar-preload');
+            }
+        } catch (e) {
+            // ignore if storage is unavailable
+        }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -247,12 +256,14 @@
         
         /* Hamburger Menu Button */
         .hamburger-btn {
+            display: block !important;
             width: 30px;
             height: 24px;
             position: relative;
             cursor: pointer;
-            background: transparent;
-            border: none;
+            background: rgba(255,255,255,0.2) !important; /* Make it visible */
+            border: 2px solid white !important;
+            border-radius: 4px !important;
             padding: 0;
             margin-right: 12px;
             z-index: 1001;
@@ -290,53 +301,118 @@
             transform: rotate(-135deg);
         }
         
-        .sidebar {
-            width: 270px;
-            height: calc(100vh - 56px);
-            position: fixed;
-            top: 56px;
-            left: 0;
-            background: white;
-            border-right: 1px solid #e5e7eb;
-            z-index: 1000;
-            overflow-y: auto;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
+        @media (max-width: 1200px) {
+            .hamburger-btn {
+                display: block !important;
+            }
         }
         
-        .sidebar.open {
-            transform: translateX(0);
+        /* Force hamburger visible for debugging */
+        .hamburger-btn {
+            display: block !important;
+        }
+        
+        .sidebar {
+            /* Mobile-first: sidebar drops down from under the navbar */
+            width: auto;
+            max-width: 360px;
+            position: fixed;
+            left: 12px;
+            right: 12px;
+            top: 56px;
+            height: auto;
+            max-height: calc(100vh - 70px);
+            background: linear-gradient(135deg, #667eeafa 0%, #764ba2fa 100%);
+            color: white;
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 22px 70px rgba(0,0,0,0.2);
+            z-index: 1000;
+            overflow-y: auto;
+            transform: translateY(-110%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        
+        .sidebar.open,
+        html.sidebar-open-persisted .sidebar {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        html.sidebar-preload .sidebar {
+            transition: none !important;
         }
         
         .sidebar-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: rgba(255,255,255,0.12);
             color: white;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.16);
+        }
+        
+        .sidebar-header h6 {
+            margin: 0;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
         
         .sidebar-nav {
-            padding: 1rem 0;
+            padding: 1rem 0 1.25rem;
         }
         
         .sidebar-link {
             display: block;
-            padding: 12px 20px;
-            color: var(--text-primary);
+            padding: 14px 22px;
+            color: rgba(255,255,255,0.95);
             text-decoration: none;
-            border-radius: 8px;
-            margin: 4px 15px;
-            transition: all 0.3s;
-            font-weight: 500;
+            border-radius: 14px;
+            margin: 6px 14px;
+            transition: background 0.25s ease, transform 0.25s ease, color 0.25s ease;
+            font-weight: 600;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(6px);
+        }
+        
+        .sidebar-link i {
+            font-size: 1rem;
+            margin-right: 10px;
         }
         
         .sidebar-link:hover {
-            background: var(--bg-light);
-            color: var(--primary);
-            transform: translateX(5px);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateX(3px);
         }
         
         .sidebar-link.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: rgba(255,255,255,0.28);
             color: white;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+        }
+        
+        /* Desktop: full sidebar from left */
+        @media (min-width: 1200px) {
+            .sidebar {
+                width: 280px !important;
+                left: 0 !important;
+                right: auto !important;
+                top: 56px !important;
+                height: calc(100vh - 56px) !important;
+                max-height: none !important;
+                border-radius: 0 !important;
+                border-right: 1px solid rgba(255,255,255,0.12) !important;
+                box-shadow: 0 0 0 rgba(0,0,0,0) !important;
+                transform: translateX(-100%) !important;
+                opacity: 1;
+            }
+            .sidebar.open,
+            html.sidebar-open-persisted .sidebar {
+                transform: translateX(0) !important;
+            }
+            html.sidebar-preload .sidebar {
+                transition: none !important;
+            }
         }
         
         .main-content {
@@ -346,9 +422,11 @@
             margin-left: 0;
             transition: margin-left 0.3s ease-in-out;
         }
-        
-        .main-content.sidebar-open {
-            margin-left: 270px;
+
+        @media (min-width: 1200px) {
+            .main-content.sidebar-open {
+                margin-left: 270px;
+            }
         }
 
         .main-content > .container,
@@ -523,15 +601,50 @@
             var sidebar = document.querySelector('.sidebar');
             var mainContent = document.querySelector('.main-content');
 
+            // Check if sidebar should be open from localStorage
+            var sidebarOpen = localStorage.getItem('sidebarOpen') === 'true';
+            
+            if (sidebar && sidebarOpen) {
+                sidebar.classList.add('open');
+                if (sidebarToggle) {
+                    sidebarToggle.classList.add('open');
+                }
+                if (mainContent) {
+                    mainContent.classList.add('sidebar-open');
+                }
+            }
+
             if (sidebarToggle && sidebar) {
                 sidebarToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('open');
-                    if (mainContent) {
-                        mainContent.classList.toggle('sidebar-open');
+                    var isOpen = sidebar.classList.contains('open');
+
+                    if (isOpen) {
+                        sidebar.classList.remove('open');
+                        sidebarToggle.classList.remove('open');
+                        document.documentElement.classList.remove('sidebar-open-persisted');
+                        localStorage.setItem('sidebarOpen', 'false');
+                        if (mainContent) {
+                            mainContent.classList.remove('sidebar-open');
+                        }
+                    } else {
+                        sidebar.classList.add('open');
+                        sidebarToggle.classList.add('open');
+                        document.documentElement.classList.add('sidebar-open-persisted');
+                        localStorage.setItem('sidebarOpen', 'true');
+                        if (mainContent) {
+                            mainContent.classList.add('sidebar-open');
+                        }
                     }
-                    sidebarToggle.classList.toggle('open');
                 });
             }
+
+            if (document.documentElement.classList.contains('sidebar-preload')) {
+                requestAnimationFrame(function() {
+                    document.documentElement.classList.remove('sidebar-preload');
+                });
+            }
+            
+            // Keep the sidebar open across page loads until the user closes it
         });
     </script>
     
