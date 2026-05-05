@@ -245,6 +245,51 @@
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
         
+        /* Hamburger Menu Button */
+        .hamburger-btn {
+            width: 30px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-right: 12px;
+            z-index: 1001;
+        }
+        
+        .hamburger-btn span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-btn span:nth-child(1) { top: 0px; }
+        .hamburger-btn span:nth-child(2) { top: 10px; }
+        .hamburger-btn span:nth-child(3) { top: 20px; }
+        
+        .hamburger-btn.open span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger-btn.open span:nth-child(2) {
+            opacity: 0;
+            left: -20px;
+        }
+        
+        .hamburger-btn.open span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        
         .sidebar {
             width: 270px;
             height: calc(100vh - 56px);
@@ -255,6 +300,12 @@
             border-right: 1px solid #e5e7eb;
             z-index: 1000;
             overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
         }
         
         .sidebar-header {
@@ -292,6 +343,11 @@
             flex: 1;
             padding: 2rem 2rem 2rem 1.5rem;
             min-width: 0;
+            margin-left: 0;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        
+        .main-content.sidebar-open {
             margin-left: 270px;
         }
 
@@ -309,6 +365,13 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-3">
+            @auth
+            <button class="hamburger-btn" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            @endauth
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
                 <img src="{{ asset('images/logo.png') }}" alt="Lost & Found" style="width: 32px; height: 32px; margin-right: 8px;">
                 <span>Campus Lost & Found</span>
@@ -451,7 +514,26 @@
         @endauth
     </main>
 
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebarToggle = document.getElementById('sidebarToggle');
+            var sidebar = document.querySelector('.sidebar');
+            var mainContent = document.querySelector('.main-content');
+
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                    if (mainContent) {
+                        mainContent.classList.toggle('sidebar-open');
+                    }
+                    sidebarToggle.classList.toggle('open');
+                });
+            }
+        });
+    </script>
     
     <style>
         .avatar-sm {
