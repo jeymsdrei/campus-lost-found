@@ -214,7 +214,7 @@ $departments = \App\Models\Department::where('is_active', true)->orderBy('name',
 
             <div class="mb-3">
                 <label for="password" class="form-label"><i class="bi bi-lock me-2"></i>Password *</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="new-password" placeholder="Create a strong password">
+                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="new-password" placeholder="Create a strong password at least 8 characters">
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

@@ -157,9 +157,14 @@
             </div>
 
             <div class="mb-4">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
-                    <label class="form-check-label" for="remember_me">Remember me</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                        <label class="form-check-label" for="remember_me">Remember me</label>
+                    </div>
+                    <div>
+                        <a href="{{ route('password.request') }}" class="login-link small">Forgot your password?</a>
+                    </div>
                 </div>
             </div>
 
